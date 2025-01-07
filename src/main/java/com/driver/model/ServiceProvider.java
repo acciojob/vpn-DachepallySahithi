@@ -1,10 +1,14 @@
 package com.driver.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class ServiceProvider {
+
+    public ServiceProvider(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -14,15 +18,6 @@ public class ServiceProvider {
     @ManyToOne
     @JoinColumn
     Admin admin;
-
-    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Country> countryList;
-
-    @ManyToMany(mappedBy = "serviceProviderList", cascade = CascadeType.ALL)
-    List<User> users;
-
-    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Connection> connectionList;
 
     public int getId() {
         return id;
@@ -70,5 +65,24 @@ public class ServiceProvider {
 
     public void setConnectionList(List<Connection> connectionList) {
         this.connectionList = connectionList;
+    }
+
+
+    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    List<Country> countryList=new ArrayList<>();
+
+    @ManyToMany(mappedBy = "serviceProviderList", cascade = CascadeType.ALL)
+    List<User> users=new ArrayList<>();
+
+    @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
+    List<Connection> connectionList=new ArrayList<>();
+
+    public ServiceProvider(int id, String name, Admin admin, List<User> users, List<Connection> connectionList, List<Country> countryList){
+        this.id=id;
+        this.name=name;
+        this.admin=admin;
+        this.users=users;
+        this.connectionList=connectionList;
+        this.countryList=countryList;
     }
 }
